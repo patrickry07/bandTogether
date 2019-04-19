@@ -167,7 +167,7 @@ Artist.hasMany(Listing);
 
 // must sync to create tabels and associations.
 // {force:true}
-sequelize.sync({force:true})
+sequelize.sync()
   .then(() => {
   })
   .catch(err => {console.error(err)});
