@@ -6,17 +6,17 @@ const PASSWORD = process.env.SQL_PASSWORD || 'password';
 
 // Creates connection. As a matter of flexiblity, security, and habit the password has been moved to .env
 // May move user name to .env incase of same reasons stated for password 
-const sequelize = new Sequelize('bandtogether', USER, PASSWORD, {
-  host: 'localhost',
-  // port: 3306, // default port for mysql. There incase anyone needs it.
-  dialect: 'mysql',
-});
-
-// const sequelize = new Sequelize('bandtogether', 'bandtogether', process.env.AWSPASS, {
-//   host: 'bandtogether.co5uhag2jtpo.us-east-2.rds.amazonaws.com',
-//   port: 3306,
-//   dialect: 'mysql'
+// const sequelize = new Sequelize('bandtogether', USER, PASSWORD, {
+//   host: 'localhost',
+//   // port: 3306, // default port for mysql. There incase anyone needs it.
+//   dialect: 'mysql',
 // });
+
+const sequelize = new Sequelize('bandtogether', 'bandtogether', process.env.AWSPASS, {
+  host: 'bandtogether.co5uhag2jtpo.us-east-2.rds.amazonaws.com',
+  port: 3306,
+  dialect: 'mysql'
+});
 
 
 // checks to see if sequelize has correctly connected to the database and give an error if it hasn't.
