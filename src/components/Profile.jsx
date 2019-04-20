@@ -67,7 +67,7 @@ class Profile extends React.Component {
             </div>
           </div>
         </div>
-        {/* <Comments currentProfile={this.props.currentProfile} userProfile={userProfile}></Comments> */}
+        <Comments currentProfile={this.props.currentProfile} userProfile={userProfile}></Comments>
       </div>
     )
   }

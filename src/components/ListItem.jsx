@@ -13,10 +13,13 @@ class ListItem extends React.Component {
       shown: false,
       contactInfo: {},
       bandData: {},
+      userProfile:{}
     };
     
     this.handleClick = this.handleClick.bind(this);
     this.profileClick = this.profileClick.bind(this);
+    this.messageClick = this.messageClick.bind(this);
+    this.sendMessage = this.sendMessage.bind(this);
   }
 
   componentDidMount() {
@@ -47,9 +50,11 @@ class ListItem extends React.Component {
       return axios.get(`/listings/contact?id=${listing.id}`)
         .then((response) => {
           const artistData = response.data;
+          console.log(artistData,'artistData')
           const contactInfo = {
             email: artistData.contact_email,
             number: artistData.contact_num,
+            name: artistData.name,
           }
           this.setState({contactInfo, shown: true});
         })
@@ -57,6 +62,37 @@ class ListItem extends React.Component {
       this.setState({contactInfo: {}, shown: false});
     }
   }
+
+
+  //handles the message being seen when client clicks on interested
+  messageClick() {
+    if (!this.state.shown) {
+      const { listing } = this.props;
+      return axios.get(`/listings/contact?id=${listing.id}`)
+        .then((response) => {
+          const artistData = response.data;
+          console.log(artistData,'artistData')
+          const contactInfo = {
+            name: artistData.name,
+          }
+           this.sendMessage();
+          this.setState({contactInfo, shown: true});
+        })
+    } else {
+      this.setState({contactInfo: {}, shown: false});
+    }
+  }
+//handles the message being sent to event owner when someone is interested in listing
+sendMessage(){
+  const body = {
+postTitle: this.props.listing.title,
+artistNum: this.state.bandData.contact_num,
+clientName: this.props.userProfile.name,
+clientNum: this.props.userProfile.contact_num
+  }
+  console.log(this.props, this.state)
+  return axios.post('/to', body)
+}
 
   render() {
     const {listing, isLoggedIn, userProfile} = this.props;
@@ -74,6 +110,19 @@ class ListItem extends React.Component {
         {!isLoggedIn && "Must be logged in to view contact info!"}
       </Popover>
     )
+    const popoverMssg = (
+      <Popover id="popover-basic">
+        {isLoggedIn && (
+          <div>
+            <ul>
+              {contactInfo.name && <li>You have successfully notified &nbsp;{contactInfo.name} your interest!</li>}
+            </ul>
+          </div>
+        )}
+        {!isLoggedIn && "Must be logged in to send confirmation!"}
+      </Popover>
+    )
+   
     return (
     <div className="list-group-item bg-light" >
       <div className="row d-flex w-100 justify-content-between">
@@ -94,7 +143,12 @@ class ListItem extends React.Component {
         </div>
         <div className="col-md-2 flex-grow-1">
           <OverlayTrigger trigger="click" placement="bottom" overlay={popover}>
-            <button type="button" onClick={this.handleClick} className="btn btn-secondary">Respond to this Listing</button>
+            <button type="button" onClick={this.handleClick} className="btn btn-secondary">Contact Information</button>
+          </OverlayTrigger>
+        </div>
+        <div className="col-md-5 flex-grow-1">
+          <OverlayTrigger trigger="click" placement="bottom" overlay={popoverMssg}>
+            <button type="button" onClick={this.messageClick} className="btn btn-secondary">Click here if Interested!</button>
           </OverlayTrigger>
           <ListingComments userProfile={userProfile} listing={listing}/>
         </div>
