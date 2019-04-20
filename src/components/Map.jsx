@@ -34,11 +34,11 @@ componentDidMount(){
   script.onload = function(){
 
 
-    navigator.geolocation.getCurrentPosition( position => {
-      console.log(position.coords.latitude, position.coords.longitude);
+   // navigator.geolocation.getCurrentPosition( position => {
+     // console.log(position.coords.latitude, position.coords.longitude);
       
-      const userLatitude = position.coords.latitude;
-      const userLongitude = position.coords.longitude;
+    const userLatitude =  29.9511;
+    const userLongitude = -90.0715;
       
       const map =  window.tomtom.L.map('map', {
       key: 'pcm5jnIlZGFDyxHe5t8sQKodDJhrd6FL',
@@ -57,7 +57,7 @@ componentDidMount(){
         console.error(err);
       });
 
-    })
+    //})
 
 
   }
@@ -94,6 +94,7 @@ render() {
 
   return(
     <div>
+      Hello
     <div id="map">
     </div>
     </div>
