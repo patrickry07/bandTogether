@@ -3,6 +3,8 @@ import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import moment from 'moment'
 import Axios from 'axios'
+import Card from 'react-bootstrap/Card';
+import Alert from 'react-bootstrap/Alert';
 
 
 class WallModal extends React.Component {
@@ -81,14 +83,22 @@ componentDidMount(){
           <Modal.Header closeButton>
             <Modal.Title>{this.props.currentProfile.name}'s Wall!</Modal.Title>
           </Modal.Header>
-          {comments.map((comment, index) => {
-            return (
-              <Modal.Body key={index}>
-                <div>{comment.name} commented on {moment(comment.createdAt).format('MMMM Do YYYY, h:mm a')}</div>
-                <div>{comment.comment}</div>
-              </Modal.Body>
-            )
-          })}
+          <Modal.Body>
+            {comments.map((comment, index) => {
+              return (
+                <Card style={{ width: '28rem' }} key={index}>
+                  <Card.Body>
+                    <Card.Text>
+                      <span>@{comment.name} | {moment(comment.createdAt).format('MMMM Do YYYY')}</span>
+                      <Alert variant='secondary'>
+                        <div>{comment.comment}</div>
+                      </Alert>
+                    </Card.Text>
+                  </Card.Body>
+                </Card>
+              )
+            })}
+          </Modal.Body>
           <Modal.Footer>
             <input placeholder="Add new comment..." required={true}
               onChange={(event) => { this.handleChange(event.target.value) }} value={this.state.commentValue} />
