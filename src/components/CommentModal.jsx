@@ -74,7 +74,7 @@ class CommentModal extends React.Component {
     console.log(comments)
     return (
       <>
-        <Button variant="secondary" onClick={this.handleShow}>
+        <Button variant="secondary" onClick={this.handleShow} >
           See This Listing's Comments!
         </Button>
 

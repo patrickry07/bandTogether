@@ -147,9 +147,11 @@ clientNum: this.props.userProfile.contact_num
           </OverlayTrigger>
         </div>
         <div className="col-md-5 flex-grow-1">
+        
           <OverlayTrigger trigger="click" placement="bottom" overlay={popoverMssg}>
-            <button type="button" onClick={this.messageClick} className="btn btn-secondary">Click here if Interested!</button>
+              <button type="button" onClick={this.messageClick} className="btn btn-secondary">Click here if Interested!</button>
           </OverlayTrigger>
+            <div><button type="button" className="btn btn-default"></button></div>
           <ListingComments userProfile={userProfile} listing={listing}/>
         </div>
       </div>
